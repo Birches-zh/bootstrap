@@ -41,6 +41,7 @@
   <body{{ with .Page.Params.body_class }} class="{{ . }}"{{ end }}>
     {{ .Content }}
 
+    {{- /* TODO Deduplicate this; move logic to scripts.html and include that instead */ -}}
     {{ if ne .Page.Params.include_js false -}}
       {{- if eq hugo.Environment "production" -}}
         <script src="/docs/{{ .Site.Params.docs_version }}/dist/js/bootstrap.bundle.min.js" {{ printf "integrity=%q" .Site.Params.cdn.js_bundle_hash | safeHTMLAttr }} crossorigin="anonymous"></script>
@@ -48,6 +49,7 @@
         <script src="/docs/{{ .Site.Params.docs_version }}/dist/js/bootstrap.bundle.js"></script>
       {{- end }}
 
+      {{- /* TODO Deduplicate this; make use of a frontend param instead  */ -}}
       {{- if or (eq .Page.Title "Cheatsheet") (eq .Page.Title "ورقة غش") -}}
         {{- $vendor := resources.Match "js/vendor/*.js" -}}
         {{- $js := resources.Match "js/*.js" -}}
